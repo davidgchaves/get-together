@@ -7,4 +7,11 @@ describe CreatesProject do
 
     expect(creator.project.name).to eq "Project Runway"
   end
+
+  it "creates a project with a blank name when name is not given" do
+    creator = CreatesProject.new
+    creator.build
+
+    expect(creator.project.name).to eq ""
+  end
 end
