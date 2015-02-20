@@ -21,5 +21,14 @@ describe CreatesProject do
       tasks = creator.convert_string_to_tasks
       expect(tasks.size).to eq 0
     end
+
+    context "when handling a single string with no size" do
+      let(:creator) { CreatesProject.new name: "Test", task_string: "Start things" }
+      let(:tasks) { creator.convert_string_to_tasks }
+
+      it "adds a task" do
+        expect(tasks.size).to eq 1
+      end
+    end
   end
 end
