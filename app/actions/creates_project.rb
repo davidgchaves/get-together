@@ -2,11 +2,11 @@ class CreatesProject
   attr_accessor :project
   attr_reader :name
 
-  def initialize(name)
+  def initialize(name: "")
     @name = name
   end
 
   def build
-    self.project = Project.new @name
+    self.project = Project.new name: name
   end
 end
