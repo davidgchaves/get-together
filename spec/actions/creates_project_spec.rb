@@ -94,5 +94,9 @@ describe CreatesProject do
     it "attaches the tasks to the project" do
       expect(creator.project.tasks.size).to eq 3
     end
+
+    it "saves the project" do
+      expect(creator.project).not_to be_a_new_record
+    end
   end
 end
