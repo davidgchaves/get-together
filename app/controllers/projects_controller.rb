@@ -4,11 +4,15 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    @action = CreatesProject.new(
-      name: params[:project][:name],
-      task_string: params[:project][:tasks])
+    @action = CreatesProject.new project_params_hash
     @action.create
 
-    render :new
+    redirect_to projects_path
   end
+
+  private
+    def project_params_hash
+      { name: params[:project][:name],
+        task_string: params[:project][:tasks] }
+    end
 end
