@@ -19,5 +19,9 @@ describe ProjectsController, type: :controller do
     it "commands CreateProject to create the project" do
       expect(assigns(:action).project.name).to eq "Runaway"
     end
+
+    it "redirects to projects#index" do
+      expect(response).to redirect_to projects_path
+    end
   end
 end
