@@ -16,10 +16,11 @@ describe CreatesProject do
   end
 
   describe "task string parsing" do
+    let(:creator) { CreatesProject.new name: "Test", task_string: task_string }
+    let(:tasks) { creator.convert_string_to_tasks }
 
     context "when handling an empty string" do
-      let(:creator) { CreatesProject.new name: "Test", task_string: "" }
-      let(:tasks) { creator.convert_string_to_tasks }
+      let(:task_string) { "" }
 
       it "doesn't add any task" do
         expect(tasks.size).to eq 0
@@ -27,8 +28,7 @@ describe CreatesProject do
     end
 
     context "when handling a single string with no size" do
-      let(:creator) { CreatesProject.new name: "Test", task_string: "Start things" }
-      let(:tasks) { creator.convert_string_to_tasks }
+      let(:task_string) { "Start things" }
 
       it "adds a task" do
         expect(tasks.size).to eq 1
@@ -44,8 +44,7 @@ describe CreatesProject do
     end
 
     context "when handling a single string with 0 size" do
-      let(:creator) { CreatesProject.new name: "Test", task_string: "Start things:0" }
-      let(:tasks) { creator.convert_string_to_tasks }
+      let(:task_string) { "Start things:0" }
 
       it "adds a task with a default size of 1" do
         expect(tasks.map(&:size)).to eq [1]
@@ -53,8 +52,7 @@ describe CreatesProject do
     end
 
     context "when handling a single string with size" do
-      let(:creator) { CreatesProject.new name: "Test", task_string: "Start things:3" }
-      let(:tasks) { creator.convert_string_to_tasks }
+      let(:task_string) { "Start things:3" }
 
       it "adds a task" do
         expect(tasks.size).to eq 1
@@ -70,8 +68,7 @@ describe CreatesProject do
     end
 
     context "when handling a multiline string" do
-      let(:creator) { CreatesProject.new name: "Test", task_string: "Start things:3\nIn process\nFinish things:6" }
-      let(:tasks) { creator.convert_string_to_tasks }
+      let(:task_string) { "Start things:3\nIn process\nFinish things:6" }
 
       it "adds the right number of tasks" do
         expect(tasks.size).to eq 3
