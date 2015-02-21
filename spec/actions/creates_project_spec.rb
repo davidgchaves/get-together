@@ -86,4 +86,13 @@ describe CreatesProject do
       end
     end
   end
+
+  describe "creation" do
+    let(:creator) { CreatesProject.new name: "Test", task_string: "Start things:3\nIn process\nFinish things:6" }
+    before(:example) { creator.create }
+
+    it "attaches the tasks to the project" do
+      expect(creator.project.tasks.size).to eq 3
+    end
+  end
 end
