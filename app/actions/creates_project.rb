@@ -14,6 +14,10 @@ class CreatesProject
   end
 
   def convert_string_to_tasks
-    task_string.blank? ? [] : [Task.new(title: task_string, size: 1)]
+    if task_string.blank?
+      []
+    else
+      [Task.new(title: task_string.split(/:/).first, size: 1)]
+    end
   end
 end
