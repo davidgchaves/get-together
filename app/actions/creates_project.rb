@@ -17,7 +17,9 @@ class CreatesProject
     if task_string.blank?
       []
     else
-      [Task.new(title: task_string.split(/:/).first, size: 1)]
+      title, size = task_string.split(/:/)
+      if size.nil? then size = 1 end
+      [Task.new(title: title, size: size)]
     end
   end
 end
