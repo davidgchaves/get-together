@@ -1,18 +1,27 @@
 require "rails_helper"
 
 describe CreatesProject do
-  it "creates a project with the given name" do
-    creator = CreatesProject.new name: "Project Runway"
-    creator.build
 
-    expect(creator.project.name).to eq "Project Runway"
-  end
+  describe "build" do
+    let(:creator) { CreatesProject.new project_arguments_hash }
 
-  it "creates a project with a blank name when name is not given" do
-    creator = CreatesProject.new
-    creator.build
+    context "with no project name" do
+      let(:project_arguments_hash) { {} }
+      before(:example) { creator.build }
 
-    expect(creator.project.name).to eq ""
+      it "creates the project" do
+        expect(creator.project.name).to eq ""
+      end
+    end
+
+    context "with a given project name" do
+      let(:project_arguments_hash) { { name: "Project Runway" } }
+      before(:example) { creator.build }
+
+      it "creates the project" do
+        expect(creator.project.name).to eq "Project Runway"
+      end
+    end
   end
 
   describe "task string parsing" do
@@ -82,4 +91,5 @@ describe CreatesProject do
       expect(creator.project).not_to be_a_new_record
     end
   end
+
 end
