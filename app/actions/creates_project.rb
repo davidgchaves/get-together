@@ -21,6 +21,10 @@ class CreatesProject
     end
   end
 
+  def create
+    build
+  end
+
   private
     def create_task_from(single_task_string)
       Task.new parse_title_and_size_from(single_task_string)
