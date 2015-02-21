@@ -14,6 +14,6 @@ class CreatesProject
   end
 
   def convert_string_to_tasks
-    task_string.blank? ? [] : [Task.new(title: task_string)]
+    task_string.blank? ? [] : [Task.new(title: task_string, size: 1)]
   end
 end
