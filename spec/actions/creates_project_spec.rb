@@ -30,56 +30,42 @@ describe CreatesProject do
     context "when handling a single string with no size" do
       let(:task_string) { "Start things" }
 
-      it "adds a task" do
-        expect(tasks.size).to eq 1
-      end
-
-      it "adds a task with the right title" do
-        expect(tasks.map(&:title)).to eq ["Start things"]
-      end
-
-      it "adds a task with a default size of 1" do
-        expect(tasks.map(&:size)).to eq [1]
+      it "adds a task with the right title and a default size of 1" do
+        expect(tasks).to match [
+          an_object_having_attributes(title: "Start things", size: 1)
+        ]
       end
     end
 
     context "when handling a single string with 0 size" do
       let(:task_string) { "Start things:0" }
 
-      it "adds a task with a default size of 1" do
-        expect(tasks.map(&:size)).to eq [1]
+      it "adds a task with the right title and a default size of 1" do
+        expect(tasks).to match [
+          an_object_having_attributes(title: "Start things", size: 1)
+        ]
       end
     end
 
     context "when handling a single string with size" do
       let(:task_string) { "Start things:3" }
 
-      it "adds a task" do
-        expect(tasks.size).to eq 1
-      end
-
-      it "adds a task with the right title" do
-        expect(tasks.map(&:title)).to eq ["Start things"]
-      end
-
-      it "adds a task with the right size" do
-        expect(tasks.map(&:size)).to eq [3]
+      it "adds a task with the right title and size" do
+        expect(tasks).to match [
+          an_object_having_attributes(title: "Start things", size: 3)
+        ]
       end
     end
 
     context "when handling a multiline string" do
       let(:task_string) { "Start things:3\nIn process\nFinish things:6" }
 
-      it "adds the right number of tasks" do
-        expect(tasks.size).to eq 3
-      end
-
-      it "adds the tasks with the right titles" do
-        expect(tasks.map(&:title)).to eq ["Start things", "In process", "Finish things"]
-      end
-
-      it "adds the tasks with the right sizes" do
-        expect(tasks.map(&:size)).to eq [3, 1, 6]
+      it "adds all the tasks with the right titles and sizes" do
+        expect(tasks).to match [
+          an_object_having_attributes(title: "Start things", size: 3),
+          an_object_having_attributes(title: "In process", size: 1),
+          an_object_having_attributes(title: "Finish things", size: 6)
+        ]
       end
     end
   end
