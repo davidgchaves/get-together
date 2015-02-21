@@ -43,6 +43,15 @@ describe CreatesProject do
       end
     end
 
+    context "when handling a single string with 0 size" do
+      let(:creator) { CreatesProject.new name: "Test", task_string: "Start things:0" }
+      let(:tasks) { creator.convert_string_to_tasks }
+
+      it "adds a task with a default size of 1" do
+        expect(tasks.map(&:size)).to eq [1]
+      end
+    end
+
     context "when handling a single string with size" do
       let(:creator) { CreatesProject.new name: "Test", task_string: "Start things:3" }
       let(:tasks) { creator.convert_string_to_tasks }
