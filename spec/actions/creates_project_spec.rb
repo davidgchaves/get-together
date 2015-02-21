@@ -54,6 +54,10 @@ describe CreatesProject do
       it "adds a task with the right title" do
         expect(tasks.map(&:title)).to eq ["Start things"]
       end
+
+      it "adds a task with the right size" do
+        expect(tasks.map(&:size)).to eq [3]
+      end
     end
   end
 end
