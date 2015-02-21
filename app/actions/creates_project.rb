@@ -17,13 +17,21 @@ class CreatesProject
 
   def convert_string_to_tasks
     task_string.split(/\n/).map do |single_task_string|
-      Task.new(parse_title_and_size_from single_task_string)
+      create_task_from single_task_string
     end
   end
 
   private
+    def create_task_from(single_task_string)
+      Task.new parse_title_and_size_from(single_task_string)
+    end
+
     def parse_title_and_size_from(string)
       title, size = string.split(/:/)
-      { title: title, size: size || DEFAULT_SIZE }
+      { title: title, size: produce_right(size) }
+    end
+
+    def produce_right(size)
+      (size.blank? || size.to_i.zero?) ? DEFAULT_SIZE : size
     end
 end
