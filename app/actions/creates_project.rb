@@ -23,6 +23,7 @@ class CreatesProject
 
   def create
     build
+    project.save
   end
 
   private
