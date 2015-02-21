@@ -16,10 +16,14 @@ describe CreatesProject do
   end
 
   describe "task string parsing" do
-    it "handles an empty string" do
-      creator = CreatesProject.new name: "Test", task_string: ""
-      tasks = creator.convert_string_to_tasks
-      expect(tasks.size).to eq 0
+
+    context "when handling an empty string" do
+      let(:creator) { CreatesProject.new name: "Test", task_string: "" }
+      let(:tasks) { creator.convert_string_to_tasks }
+
+      it "doesn't add any task" do
+        expect(tasks.size).to eq 0
+      end
     end
 
     context "when handling a single string with no size" do
