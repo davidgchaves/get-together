@@ -59,5 +59,14 @@ describe CreatesProject do
         expect(tasks.map(&:size)).to eq [3]
       end
     end
+
+    context "when handling a multiline string" do
+      let(:creator) { CreatesProject.new name: "Test", task_string: "Start things:3\nIn process\nFinish things:6" }
+      let(:tasks) { creator.convert_string_to_tasks }
+
+      it "adds the right number of tasks" do
+        expect(tasks.size).to eq 3
+      end
+    end
   end
 end
