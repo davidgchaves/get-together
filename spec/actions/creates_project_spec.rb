@@ -32,7 +32,7 @@ describe CreatesProject do
       let(:task_string) { "" }
 
       it "doesn't add any task" do
-        expect(tasks.size).to eq 0
+        expect(tasks).to match []
       end
     end
 
