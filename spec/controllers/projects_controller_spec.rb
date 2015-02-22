@@ -1,6 +1,7 @@
 require "rails_helper"
 
 describe ProjectsController, type: :controller do
+
   describe "GET new" do
     before(:example) { get :new }
 
@@ -14,14 +15,26 @@ describe ProjectsController, type: :controller do
   end
 
   describe "POST create" do
-    before(:example) { post :create, project: { name: "Runaway", tasks: "Start something:2" } }
+    let(:fake_action) { instance_double CreatesProject, create: true }
 
-    it "commands CreateProject to create the project" do
-      expect(assigns(:action).project.name).to eq "Runaway"
+    before(:example) do
+      allow(CreatesProject).to receive(:new)
+        .with(name: "Runway", task_string: "Start something:2")
+        .and_return fake_action
+      post :create, project: { name: "Runway", tasks: "Start something:2" }
+    end
+
+    it "assigns the initialized project to @action" do
+      expect(assigns(:action)).to match fake_action
+    end
+
+    it "commands CreateProject to actually persist the project" do
+      expect(fake_action).to have_received(:create)
     end
 
     it "redirects to projects#index" do
       expect(response).to redirect_to projects_path
     end
   end
+
 end
