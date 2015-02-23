@@ -15,26 +15,28 @@ describe ProjectsController, type: :controller do
   end
 
   describe "POST create" do
-    let(:fake_action) { instance_double CreatesProject, create: true }
-    let(:project_params_data) { { name: "Runway", task_string: "Start something:2" } }
+    context "with valid project data" do
+      let(:valid_action) { instance_double CreatesProject, create: true }
+      let(:project_params_data) { { name: "Runway", task_string: "Start something:2" } }
 
-    before(:example) do
-      allow(CreatesProject).to receive(:new)
-        .with(project_params_data)
-        .and_return fake_action
-      post :create, project: { name: "Runway", tasks: "Start something:2" }
-    end
+      before(:example) do
+        allow(CreatesProject).to receive(:new)
+          .with(project_params_data)
+          .and_return valid_action
+        post :create, project: { name: "Runway", tasks: "Start something:2" }
+      end
 
-    it "commands CreateProject to initialize the project with data from params" do
-      expect(CreatesProject).to have_received(:new).with project_params_data
-    end
+      it "commands CreateProject to initialize the project with data from params" do
+        expect(CreatesProject).to have_received(:new).with project_params_data
+      end
 
-    it "commands CreateProject to actually persist the project" do
-      expect(fake_action).to have_received(:create)
-    end
+      it "commands CreateProject to actually persist the project" do
+        expect(valid_action).to have_received(:create)
+      end
 
-    it "redirects to projects#index" do
-      expect(response).to redirect_to projects_path
+      it "redirects to projects#index" do
+        expect(response).to redirect_to projects_path
+      end
     end
   end
 
