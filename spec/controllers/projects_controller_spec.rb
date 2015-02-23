@@ -38,6 +38,22 @@ describe ProjectsController, type: :controller do
         expect(response).to redirect_to projects_path
       end
     end
+
+    context "with invalid project data" do
+      let(:invalid_action) { instance_double CreatesProject, create: false }
+      let(:project_params_data) { { name: "", task_string: "" } }
+
+      before(:example) do
+        allow(CreatesProject).to receive(:new)
+          .with(project_params_data)
+          .and_return invalid_action
+        post :create, project: { name: "", tasks: "" }
+      end
+
+      it "re-renders the :new template" do
+        expect(response).to render_template :new
+      end
+    end
   end
 
 end
