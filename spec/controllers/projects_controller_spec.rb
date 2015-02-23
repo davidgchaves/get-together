@@ -3,7 +3,16 @@ require "rails_helper"
 describe ProjectsController, type: :controller do
 
   describe "GET index" do
-    before(:example) { get :index }
+    let(:project_collection) { [ double(Project), double(Project)] }
+
+    before(:example) do
+      allow(Project).to receive(:all).and_return project_collection
+      get :index
+    end
+
+    it "assigns the current project collection to @projects" do
+      expect(assigns(:projects)).to match project_collection
+    end
 
     it "renders the :index template" do
       expect(response).to render_template :index
