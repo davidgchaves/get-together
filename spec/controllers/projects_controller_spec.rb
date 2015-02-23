@@ -16,16 +16,17 @@ describe ProjectsController, type: :controller do
 
   describe "POST create" do
     let(:fake_action) { instance_double CreatesProject, create: true }
+    let(:project_params_data) { { name: "Runway", task_string: "Start something:2" } }
 
     before(:example) do
       allow(CreatesProject).to receive(:new)
-        .with(name: "Runway", task_string: "Start something:2")
+        .with(project_params_data)
         .and_return fake_action
       post :create, project: { name: "Runway", tasks: "Start something:2" }
     end
 
-    it "assigns the initialized project to @action" do
-      expect(assigns(:action)).to match fake_action
+    it "commands CreateProject to initialize the project with data from params" do
+      expect(CreatesProject).to have_received(:new).with project_params_data
     end
 
     it "commands CreateProject to actually persist the project" do

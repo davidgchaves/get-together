@@ -4,8 +4,8 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    @action = CreatesProject.new project_params_hash
-    @action.create
+    action = CreatesProject.new project_params_hash
+    action.create
 
     redirect_to projects_path
   end
