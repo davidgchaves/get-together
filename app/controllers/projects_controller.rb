@@ -5,9 +5,11 @@ class ProjectsController < ApplicationController
 
   def create
     action = CreatesProject.new project_params_hash
-    action.create
-
-    redirect_to projects_path
+    if action.create
+      redirect_to projects_path
+    else
+      render :new
+    end
   end
 
   private
