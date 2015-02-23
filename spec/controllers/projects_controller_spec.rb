@@ -40,7 +40,7 @@ describe ProjectsController, type: :controller do
     end
 
     context "with invalid project data" do
-      let(:invalid_action) { instance_double CreatesProject, create: false }
+      let(:invalid_action) { instance_double CreatesProject, create: false, project: Project.new }
       let(:project_params_data) { { name: "", task_string: "" } }
 
       before(:example) do
@@ -48,6 +48,10 @@ describe ProjectsController, type: :controller do
           .with(project_params_data)
           .and_return invalid_action
         post :create, project: { name: "", tasks: "" }
+      end
+
+      it "assigns the existing project data to @project" do
+        expect(assigns(:project)).to match invalid_action.project
       end
 
       it "re-renders the :new template" do
