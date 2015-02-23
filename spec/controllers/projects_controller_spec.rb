@@ -2,6 +2,14 @@ require "rails_helper"
 
 describe ProjectsController, type: :controller do
 
+  describe "GET index" do
+    before(:example) { get :index }
+
+    it "renders the :index template" do
+      expect(response).to render_template :index
+    end
+  end
+
   describe "GET new" do
     before(:example) { get :new }
 
