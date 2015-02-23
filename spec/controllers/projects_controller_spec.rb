@@ -41,11 +41,9 @@ describe ProjectsController, type: :controller do
 
     context "with invalid project data" do
       let(:invalid_action) { instance_double CreatesProject, create: false, project: Project.new }
-      let(:project_params_data) { { name: "", task_string: "" } }
 
       before(:example) do
         allow(CreatesProject).to receive(:new)
-          .with(project_params_data)
           .and_return invalid_action
         post :create, project: { name: "", tasks: "" }
       end
