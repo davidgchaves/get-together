@@ -12,7 +12,7 @@ describe "adding projects" do
     fill_in "Tasks", with: "Task 1:3\nTask 2:5" # 2 tasks sizes 3 and 5
     click_on "Create Project"
 
-    visit project_path
+    visit projects_path
     expect(page).to have_content "Project Runway"
     expect(page).to have_content "8" # total size is 8 (=3+5)
   end
