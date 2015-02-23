@@ -8,6 +8,7 @@ class ProjectsController < ApplicationController
     if action.create
       redirect_to projects_path
     else
+      @project = action.project
       render :new
     end
   end
