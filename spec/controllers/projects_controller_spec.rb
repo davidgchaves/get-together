@@ -32,23 +32,31 @@ describe ProjectsController, type: :controller do
   end
 
   describe "POST create" do
+    let(:action) { instance_double CreatesProject }
+    let(:project_params_data) { { name: "Runway", task_string: "Start something:2" } }
+
+    before(:example) do
+      allow(CreatesProject).to receive(:new)
+        .with(project_params_data)
+        .and_return action
+      allow(action).to receive(:create).and_return true
+      post :create, project: { name: "Runway", tasks: "Start something:2" }
+    end
+
+    it "commands CreateProject to initialize the project with data from params" do
+      expect(CreatesProject).to have_received(:new).with project_params_data
+    end
+
+    it "commands CreateProject to actually persist the project" do
+      expect(action).to have_received(:create)
+    end
+
     context "with valid project data" do
       let(:valid_action) { instance_double CreatesProject, create: true }
-      let(:project_params_data) { { name: "Runway", task_string: "Start something:2" } }
 
       before(:example) do
-        allow(CreatesProject).to receive(:new)
-          .with(project_params_data)
-          .and_return valid_action
+        allow(CreatesProject).to receive(:new).and_return action
         post :create, project: { name: "Runway", tasks: "Start something:2" }
-      end
-
-      it "commands CreateProject to initialize the project with data from params" do
-        expect(CreatesProject).to have_received(:new).with project_params_data
-      end
-
-      it "commands CreateProject to actually persist the project" do
-        expect(valid_action).to have_received(:create)
       end
 
       it "redirects to projects#index" do
@@ -60,8 +68,7 @@ describe ProjectsController, type: :controller do
       let(:invalid_action) { instance_double CreatesProject, create: false, project: Project.new }
 
       before(:example) do
-        allow(CreatesProject).to receive(:new)
-          .and_return invalid_action
+        allow(CreatesProject).to receive(:new).and_return invalid_action
         post :create, project: { name: "", tasks: "" }
       end
 
